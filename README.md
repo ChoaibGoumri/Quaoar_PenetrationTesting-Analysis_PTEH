@@ -1,28 +1,30 @@
 # The Quaoar Case
 
-This document summarizes the **Black Box Penetration Testing** activity conducted on the vulnerable virtual machine *Quaoar*. The analysis was carried out as a project for the **Penetration Testing and Ethical Hacking (PTEH)** course (Academic Year 2025/2026).
+Questo documento riassume l'attività di **Penetration Testing** di tipo Black Box condotta sulla macchina virtuale vulnerabile *Quaoar*. L'analisi è stata svolta come progetto per il corso di **Penetration Testing and Ethical Hacking (PTEH)** (Anno Accademico 2025/2026).
 
-## Analysis Summary
+## Sintesi dell'Analisi
 
-The goal of the analysis was to simulate a real-world attack starting with zero knowledge of the target infrastructure. The objective was to identify architectural weaknesses, exploit them to gain access, and finally escalate privileges to achieve full system compromise (root).
+L'obiettivo dell'analisi è stato quello di simulare un attacco reale partendo da zero conoscenze dell'infrastruttura bersaglio, al fine di individuarne le debolezze architetturali, sfruttarle per ottenere l'accesso e, infine, elevare i privilegi per arrivare a comprometterla integralmente (root).
 
-The entire *Kill Chain* exploited a series of severe misconfigurations, highlighting a total lack of basic *hardening* practices:
+L'intera *Kill Chain* ha sfruttato una serie di gravi misconfigurazioni, evidenziando la totale mancanza di pratiche di *hardening* di base:
 
-1. **Enumeration and Vulnerability Mapping:** A **WordPress** installation exposed on the network was identified.
-2. **Target Exploitation:** Access to the CMS administration panel was achieved using default credentials (`admin:admin`).
-3. **Remote Code Execution (RCE):** By leveraging the active *Theme Editor* feature in WordPress, a malicious payload (PHP Reverse Shell) was injected into the `header.php` file. This provided initial access to the machine with limited privileges (`www-data`).
-4. **Privilege Escalation:** During system exploration (Post-Exploitation), cleartext passwords were found in web configuration files. Due to the critical practice of *password reuse*, the database password (`rootpassword!`) was also the password for the system `root` account, allowing full acquisition of maximum privileges.
+1. **Enumerazione e Vulnerability Mapping:** È stata individuata un'installazione di **WordPress** esposta in rete.
+2. **Target Exploitation:** L'accesso al pannello di amministrazione del CMS è stato garantito dall'utilizzo di credenziali di default (`admin:admin`).
+3. **Esecuzione di Codice Remoto (RCE):** Sfruttando la funzionalità *Theme Editor* attiva su WordPress, è stato iniettato un payload malevolo (Reverse Shell in PHP) all'interno del file `header.php`. Questo ha permesso di ottenere un primo accesso alla macchina con privilegi limitati (`www-data`).
+4. **Privilege Escalation:** Durante l'esplorazione del sistema (Post-Exploitation), è stata rilevata la conservazione in chiaro delle password nei file di configurazione web. A causa della critica pratica del *password reuse*, la stessa password del database (`rootpassword!`) è risultata essere anche la password dell'account di sistema `root`, consentendo la totale acquisizione dei privilegi massimi.
 
 ## Remediation
 
-The primary recommendations resulting from the test include:
-- Prompt removal of default credentials and application of strict password policies (absolute prohibition of password reuse between DB and system).
-- CMS Hardening (disabling the *Theme Editor* via `wp-config.php`).
-- Systematic updating and patching of obsolete services exposed by the machine.
-- Disabling direct SSH access for the root user.
+Le raccomandazioni primarie emerse dal test includono:
+- Rimozione tempestiva delle credenziali di default e applicazione di policy rigide per le password (divieto assoluto di password reuse tra DB e sistema).
+- Hardening del CMS (disattivazione del *Theme Editor* dal `wp-config.php`).
+- Aggiornamento sistematico e patching dei servizi obsoleti esposti dalla macchina.
+- Disabilitazione dell'accesso SSH diretto per l'utente root.
 
 ---
 
-**Author:**  
-Choaib Goumri (Student ID: NF22500223)  
-*University of Salerno - Department of Computer Science (DINF)*
+**Autore:**  
+Choaib Goumri 
+*Università degli Studi di Salerno 
+
+
